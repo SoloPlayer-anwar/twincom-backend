@@ -132,6 +132,7 @@ class UserController extends Controller
         $limit = $request->input('limit',10);
         $name = $request->input('name');
         $role = $request->input('role');
+        $cabang = $request->input('cabang');
 
         if($id) {
             $user = User::find($id);
@@ -162,6 +163,10 @@ class UserController extends Controller
 
         if($role) {
             $user->where('role', 'LIKE', '%' . $role . '%');
+        }
+
+        if($cabang) {
+            $user->where('cabang', 'LIKE', '%' . $cabang . '%');
         }
 
         return ResponseFormmater::success(

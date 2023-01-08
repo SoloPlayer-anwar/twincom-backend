@@ -4,7 +4,9 @@ use App\Http\Controllers\API\AbsensiController;
 use App\Http\Controllers\API\CabangController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\KeteranganController;
+use App\Http\Controllers\API\OptionsController;
 use App\Http\Controllers\API\PengaturanController;
+use App\Http\Controllers\API\ProsuderController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\WaktuController;
 use Illuminate\Http\Request;
@@ -63,4 +65,17 @@ Route::get('getWaktu', [WaktuController::class, 'getWaktu']);
 // Keterangan
 Route::post('createKeterangan', [KeteranganController::class, 'createKeterangan']);
 Route::get('getKeterangan', [KeteranganController::class, 'getKeterangan']);
+
+// Options
+Route::post('createOptions', [OptionsController::class, 'createOptions']);
+Route::get('getOptions', [OptionsController::class, 'getOptions']);
+Route::post('updateOptions/{id}', [OptionsController::class, 'updateOptions']);
+Route::post('deleteOptions/{id}', [OptionsController::class, 'deleteOptions']);
+
+// PROSUDER
+Route::post('createProsuder', [ProsuderController::class, 'createProsuder']);
+Route::get('getProsuder', [ProsuderController::class, 'getProsuder']);
+Route::post('updateProsuder/{id}', [ProsuderController::class, 'updateProsuder']);
+Route::post('deleteProsuder/{id}', [ProsuderController::class, 'deleteProsuder']);
+Route::post('pdfGenerate/{id}', [ProsuderController::class, 'pdfGenerate']);
 

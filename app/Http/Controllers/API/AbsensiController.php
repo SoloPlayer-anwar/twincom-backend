@@ -14,7 +14,7 @@ class AbsensiController extends Controller
 {
     public function createAbsensi(Request $request) {
 
-        $request->validate([
+        $validator = Validator::make($request->all(),[
             'user_id' => 'sometimes|exists:users,id',
             'pengaturan_id' => 'sometimes|exists:pengaturans,id',
             'waktu_id' => 'sometimes|exists:waktus,id',
@@ -22,6 +22,28 @@ class AbsensiController extends Controller
             'tanggal' => 'required',
             'status' => 'required',
         ]);
+
+
+        if($validator->fails()){
+            return ResponseFormmater::error(
+                null,
+                $validator->errors(),
+                500
+            );
+        }
+
+        $cek = Absensi::where('waktu_id',$request->waktu_id)
+        ->where('user_id',$request->user_id)
+        ->whereDate('created_at',date('Y-m-d'));
+
+        if($cek->first()){
+            return ResponseFormmater::error(
+                null,
+                'User telah absen sebelumnya',
+                500
+            );
+        }
+
 
         $absensi = Absensi::create([
             'user_id' => $request->user_id,
