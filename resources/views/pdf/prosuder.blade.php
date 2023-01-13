@@ -7,7 +7,7 @@
             <table class="table table-sm table-borderless">
                 <tr>
                     <td width="20%">
-                        <img src="data:image/png;base64, {!! $images['logo1']!!}" alt="" class="img img-fluid" width="50px;">
+                        <img src="data:image/png;base64, {!! $images['logo']!!}" alt="" class="img img-fluid" width="100px;">
 
                     </td>
                     <td width="60%" class="text-center font-weight-bolder">
@@ -16,7 +16,7 @@
                         JL.KP.BARU RT.03 RW.02 JL.SEROJA NO.11 LANDASAN ULIN TIMUR
                     </td>
                     <td width="20%">
-                        <img src="data:image/png;base64, {!! $images['logo2']!!}" alt="" class="img img-fluid" width="50px;">
+                        <img src="data:image/png;base64, {!! $images['logo1']!!}" alt="" class="img img-fluid" width="100px;">
                     </td>
                 </tr>
 
@@ -27,36 +27,45 @@
                     SURAT OTOMATIS PROSUDER
                 </u>
             </div>
+            <br>
+            <br>
         </div>
+
 
         {{-- BODY --}}
         <div class="col-lg-12">
+
+            <div class="ml-12 mb-3">
+                <span>
+                    Dengan Hormat.
+                    <br>
+                    Saya bertanda tangan dibawah ini :
+                </span>
+            </div>
+
             @php
                 $detail_ajuan = [
-                    ['name'=>'NAMA', 'value'=>$prosuder->name_bm],
-                    ['name'=>'JABATAN', 'value'=>$prosuder->jabatan_bm ?? '-'],
-                    ['name'=>'CABANG', 'value'=>$keluhan->cabang_bm ?? '-'],
+                    ['name'=>'Nama', 'value'=>$prosuder->name_bm ?? '-'],
+                    ['name'=>'Jabatan', 'value'=>$prosuder->jabatan_bm ?? '-'],
+                    ['name'=>'Cabang', 'value'=>$prosuder->cabang_bm ?? '-'],
                 ];
 
-                <div class="d-block mb-3" style="border-bottom: solid 1px black;"></div>
-                <div class="font-weight-bolder text-underline mb-3">
-                    <u>
-                        DENGAN INI SAYA BERMAKSUD INI MENGUSULKAN PERMOHONAN $prosuder->options->options
-                    </u>
-                </div>
+
 
                 $detail_user = [
-                    ['name'=>'NAMA', 'value'=>$prosuder->user->name ?? '-'],
-                    ['name'=>'JABATAN', 'value'=>$keluhan->user->role ?? '-'],
-                    ['name'=>'CABANG', 'value'=>$keluhan->user->cabang ?? '-'],
+                    ['name'=>'Nama', 'value'=>$prosuder->user->name ?? '-'],
+                    ['name'=>'Jabatan', 'value'=>$prosuder->user->role ?? '-'],
+                    ['name'=>'Cabang', 'value'=>$prosuder->user->cabang ?? '-'],
                 ];
 
-                <div class="d-block mb-3" style="border-bottom: solid 1px black;"></div>
-                <div class="font-weight-bolder text-underline mb-3">
-                    <u>
-                        Demikian permohonan ini dibuat untuk ditindak lanjuti, atas perhatian dan kerjasamanya, saya ucapkan terima kasih
-                    </u>
-                </div>
+                $detail_keterangan = [
+                    ['name' => 'Keterangan', 'value' => $prosuder->options->keterangan ?? '-'],
+                ];
+
+                $detail_sistem = [
+                    ['name' => 'Dengan alasan dibawah ini :', 'value' => $prosuder->tdm ?? '-'],
+                ];
+
 
             @endphp
             {{-- PERBAIKAN --}}
@@ -72,6 +81,18 @@
             </table>
             <div class="my-3"></div>
             {{-- KELUHAN --}}
+
+            <div class="me-10">
+                <span>
+                    @foreach ($detail_keterangan as $row )
+                    <span class="text-sm">{{$row['name']}}:</span>
+                    <br>
+                        <span class="me-10">{{$row['value']}}</span>
+                    @endforeach
+                </span>
+            </div>
+            <br>
+
             <table class="table table-sm table-borderless">
                 <tbody>
                     @foreach ($detail_user as $row)
@@ -82,6 +103,19 @@
                     @endforeach
                 </tbody>
             </table>
+
+            <div class="ml-12 mb-3">
+                @foreach ($detail_sistem as $row )
+                <span>
+                    {{$row['name']}}
+                    <br>
+                    <b>{{$row['value']}}</b>
+                </span>
+                @endforeach
+            </div>
+
+            <br>
+            <br>
         </div>
 
         {{-- FOOTER --}}
@@ -94,10 +128,6 @@
                             BANJARBARU, {{date('d-m-Y')}}
                             <br>
                             Hormat Kami,
-                            <br>
-                            <br>
-                            <br>
-                            <br>
                             <br>
                             <br>
                             <br>

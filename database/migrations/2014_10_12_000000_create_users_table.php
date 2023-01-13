@@ -26,7 +26,7 @@ class CreateUsersTable extends Migration
             $table->string('gender')->nullable();
             $table->text('fcm')->nullable();
             $table->string('cabang')->nullable();
-            $table->enum('role', ['admin', 'bm', 'karyawan', 'magang', 'member'])->default('member');
+            $table->enum('role', ['ADMIN', 'BM', 'KARYAWAN', 'MAGANG', 'MEMBER'])->default('MEMBER');
             $table->string('shift')->nullable();
             $table->string('tanggal')->nullable();
             $table->rememberToken();

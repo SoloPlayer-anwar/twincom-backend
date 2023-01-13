@@ -60,6 +60,7 @@ Route::get('getCabang', [CabangController::class, 'getCabang']);
 
 // Waktu
 Route::post('createWaktu', [WaktuController::class, 'createWaktu']);
+Route::post('deleteWaktu/{id}', [WaktuController::class, 'deleteWaktu']);
 Route::get('getWaktu', [WaktuController::class, 'getWaktu']);
 
 // Keterangan

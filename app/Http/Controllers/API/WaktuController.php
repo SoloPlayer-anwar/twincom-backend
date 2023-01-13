@@ -85,4 +85,14 @@ class WaktuController extends Controller
             'Data list waktu berhasil diambil'
         );
     }
+
+    public function deleteWaktu (Request $request, $id) {
+        $waktu = Waktu::findOrFail($id);
+        $waktu->delete($request->all());
+
+        return ResponseFormmater::success(
+            $waktu,
+            'Data Waktu berhasil di delete'
+        );
+    }
 }

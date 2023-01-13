@@ -55,6 +55,7 @@ class ProsuderController extends Controller
 
     public function getProsuder (Request $request) {
         $id = $request->input('id');
+        $limit = $request->input('limit',10);
         $user_id = $request->input('user_id');
         $options_id = $request->input('options_id');
         $name_bm = $request->input('name_bm');
@@ -94,11 +95,11 @@ class ProsuderController extends Controller
         }
 
         if($mengetahui) {
-            $prosuder->where('mengetahui', 'like', '%' . $mengetahui . '%');
+            $prosuder->where('mengetahui', 'LIKE', '%' . $mengetahui . '%');
         }
 
         return ResponseFormmater::success(
-            $prosuder->get(),
+            $prosuder->paginate($limit),
             'Data List Prosuder berhasil diambil'
         );
     }
@@ -123,29 +124,31 @@ class ProsuderController extends Controller
         );
     }
 
-    public function pdfGenerate(Request $request , $id) {
+    public function pdfGenerate (Request $request, $id)
+    {
         $prosuder = Prosuder::with(['options', 'user'])->find($id);
 
         if($prosuder) {
-            $title = 'public/pdf/perbaikan/'.'perbaikan-'.strtotime('now').'.pdf';
+
+            $title = 'public/pdf/prosuder/'.'prosuder-'.strtotime('now').'.pdf';
 
             $images = [
-                'logo1' => \base64_encode(file_get_contents(\url('storage/assets/img/logo1.png'))),
-                'logo2' => \base64_encode(file_get_contents(\url('storage/assets/img/logo2.png'))),
+                'logo'=> base64_encode(file_get_contents(url('storage/assets/img/logo.png'))),
+                'logo1'=> base64_encode(file_get_contents(url('storage/assets/img/logo1.png'))),
             ];
-
+            // return view('pdf.perbaikan', compact(['title','perbaikan','images']));
             $pdf = Pdf::loadView('pdf.prosuder', compact(['title','prosuder','images']));
 
             Storage::put($title, $pdf->output());
 
             return ResponseFormmater::success([
-                'pdf' => \asset(Storage::url($title))
+                'pdf' => asset(Storage::url($title))
             ], 'Data Prosuder berhasil dibuat');
         }
 
         return ResponseFormmater::error(
             null,
-            'Data Keluhan gagal diambil',
+            'Data Prosuder gagal diambil',
             404
         );
     }
