@@ -3,9 +3,13 @@
 use App\Http\Controllers\API\AbsensiController;
 use App\Http\Controllers\API\CabangController;
 use App\Http\Controllers\API\CategoryController;
+use App\Http\Controllers\API\CutiController;
 use App\Http\Controllers\API\KeteranganController;
+use App\Http\Controllers\API\MagangController;
 use App\Http\Controllers\API\OptionsController;
 use App\Http\Controllers\API\PengaturanController;
+use App\Http\Controllers\API\PenilayanController;
+use App\Http\Controllers\API\PeringatanController;
 use App\Http\Controllers\API\ProsuderController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\WaktuController;
@@ -79,4 +83,31 @@ Route::get('getProsuder', [ProsuderController::class, 'getProsuder']);
 Route::post('updateProsuder/{id}', [ProsuderController::class, 'updateProsuder']);
 Route::post('deleteProsuder/{id}', [ProsuderController::class, 'deleteProsuder']);
 Route::post('pdfGenerate/{id}', [ProsuderController::class, 'pdfGenerate']);
+
+// MAGANG
+Route::post('createMagang', [MagangController::class, 'createMagang']);
+Route::get('getMagang', [MagangController::class, 'getMagang']);
+Route::post('updateMagang/{id}', [MagangController::class, 'updateMagang']);
+Route::post('deleteMagang/{id}', [MagangController::class, 'deleteMagang']);
+
+
+// PENILAIAN
+Route::post('createPenilayan', [PenilayanController::class, 'createPenilayan']);
+Route::get('getPenilayan', [PenilayanController::class, 'getPenilayan']);
+Route::post('updatePenilayan/{id}', [PenilayanController::class, 'updatePenilayan']);
+Route::post('deletePenilayan/{id}', [PenilayanController::class, 'deletePenilayan']);
+
+
+// CUTI
+Route::post('createCuti', [CutiController::class, 'createCuti']);
+Route::post('getCuti', [CutiController::class, 'getCuti']);
+Route::post('updateCuti/{id}', [CutiController::class, 'updateCuti']);
+Route::post('deleteCuti/{id}', [CutiController::class, 'deleteCuti']);
+
+
+// SURAT PERINGATAN
+Route::post('createPeringatan', [PeringatanController::class, 'createPeringatan']);
+Route::get('getPeringatan', [PeringatanController::class, 'getPeringatan']);
+Route::post('updatePeringatan/{id}', [PeringatanController::class, 'updatePeringatan']);
+Route::post('deletePeringatan/{id}', [PeringatanController::class, 'deletePeringatan']);
 
