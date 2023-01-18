@@ -15,13 +15,13 @@ class WaktuController extends Controller
         $request->validate([
             'status' => 'sometimes|string|max:255',
             'shift' => 'sometimes|string|max:255',
-            'tanggal' => 'sometimes|string|max:255'
+            'time' => 'sometimes|string|max:255'
         ]);
 
         $waktu = Waktu::create([
             'status' => $request->status,
             'shift' => $request->shift,
-            'tanggal' => $request->tanggal
+            'time' => $request->tanggal
         ]);
 
         try {
@@ -45,7 +45,7 @@ class WaktuController extends Controller
         $id = $request->input('id');
         $status = $request->input('status');
         $shift = $request->input('shift');
-        $tanggal = $request->input('tanggal');
+        $time = $request->input('time');
 
         if($id) {
             $waktu = Waktu::find($id);
@@ -76,8 +76,8 @@ class WaktuController extends Controller
             $waktu->where('shift', 'like', '%' . $shift . '%');
         }
 
-        if($tanggal) {
-            $waktu->where('tanggal', 'like', '%' . $tanggal . '%');
+        if($time) {
+            $waktu->where('time', 'like', '%' . $time . '%');
         }
 
         return ResponseFormmater::success(

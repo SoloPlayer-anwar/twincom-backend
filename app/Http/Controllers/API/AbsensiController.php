@@ -143,6 +143,71 @@ class AbsensiController extends Controller
         );
     }
 
+    public function getAbsensiReport (Request $request) {
+        $id = $request->input('id');
+        $user_id = $request->input('user_id');
+        $pengaturan_id = $request->input('pengaturan_id');
+        $waktu_id = $request->input('waktu_id');
+        $keterangan_id = $request->input('keterangan_id');
+        $tanggal = $request->input('tanggal');
+        $status = $request->input('status');
+        $shift = $request->input('shift');
+
+        if($id) {
+            $absensi = Absensi::with(['user', 'pengaturan', 'waktu' , 'keterangan'])->find($id);
+
+            if($absensi) {
+                return ResponseFormmater::success(
+                    $absensi,
+                    'Data Absensi Berhasil di ambil'
+                );
+            }
+
+            else {
+                return ResponseFormmater::error(
+                    null,
+                    'Data absensi tidak ada',
+                    404
+                );
+            }
+        }
+
+        $absensi = Absensi::with(['user', 'pengaturan', 'waktu' , 'keterangan']);
+
+        if($user_id) {
+            $absensi->where('user_id', $user_id);
+        }
+
+        if($pengaturan_id) {
+            $absensi->where('pengaturan_id', $pengaturan_id);
+        }
+
+        if($waktu_id) {
+            $absensi->where('waktu_id', $waktu_id);
+        }
+
+        if($keterangan_id) {
+            $absensi->where('keterangan_id', $keterangan_id);
+        }
+
+        if($tanggal) {
+            $absensi->where('tanggal', 'like', '%' . $tanggal . '%');
+        }
+
+        if($shift) {
+            $absensi->where('shift', 'like', '%' . $shift . '%');
+        }
+
+        if($status) {
+            $absensi->where('status', 'like', '%' .$status . '%');
+        }
+
+        return ResponseFormmater::success(
+            $absensi->get(),
+            'Data List Absensi Berhasil diambil'
+        );
+    }
+
 
     public function deleteAbsensi (Request $request, $id) {
         $absensi = Absensi::with(['user', 'pengaturan', 'waktu'])->findOrFail($id);

@@ -5,8 +5,10 @@ namespace App\Http\Controllers\API;
 use App\Helpers\ResponseFormmater;
 use App\Http\Controllers\Controller;
 use App\Models\Magang;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class MagangController extends Controller
 {
@@ -20,7 +22,6 @@ class MagangController extends Controller
             'keahlian' => 'sometimes|string|max:255',
             'penempatan' => 'required|string|max:255',
             'tanggal' => 'required|string|max:255',
-            'sikap' => 'required|string|max:255',
             'name_perusahaan' => 'sometimes',
             'alamat' => 'sometimes'
         ]);
@@ -34,7 +35,6 @@ class MagangController extends Controller
             'keahlian' => $request->keahlian,
             'penempatan' => $request->penempatan,
             'tanggal' => $request->tanggal,
-            'sikap' => $request->sikap,
             'name_perusahaan' => $request->name_perusahaan,
             'alamat' => $request->alamat
         ]);
@@ -113,6 +113,34 @@ class MagangController extends Controller
         return ResponseFormmater::success(
             $magang,
             'Data magang berhasil di delete'
+        );
+    }
+
+    public function pdfGenerateMagang(Request $request, $id) {
+        $magang = Magang::with(['user'])->find($id);
+
+        if($magang) {
+
+            $title = 'public/pdf/magang/'.'magang-'.strtotime('now').'.pdf';
+
+            $images = [
+                'logo'=> base64_encode(file_get_contents(url('storage/assets/img/logo.png'))),
+                'logo1'=> base64_encode(file_get_contents(url('storage/assets/img/logo1.png'))),
+            ];
+            // return view('pdf.perbaikan', compact(['title','perbaikan','images']));
+            $pdf = Pdf::loadView('pdf.magang', compact(['title','magang','images']));
+
+            Storage::put($title, $pdf->output());
+
+            return ResponseFormmater::success([
+                'pdf' => asset(Storage::url($title))
+            ], 'Data magang berhasil dibuat');
+        }
+
+        return ResponseFormmater::error(
+            null,
+            'Data magang gagal diambil',
+            404
         );
     }
 }

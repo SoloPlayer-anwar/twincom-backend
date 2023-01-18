@@ -18,7 +18,7 @@ class Waktu extends Model
     protected $fillable = [
         'status',
         'shift',
-        'tanggal'
+        'time'
     ];
 
     public function absensi() {

@@ -7,11 +7,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Penilayan;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PenilayanController extends Controller
 {
     public function createPenilayan(Request $request) {
-        $request->validate([
+
+
+       $validator= Validator::make( $request->all(), [
             'user_id' => 'required|exists:users,id',
             'name_pemberi' => 'required',
             'jabatan_pemberi' => 'required',
@@ -32,6 +35,25 @@ class PenilayanController extends Controller
             'tanggal' => 'required'
         ]);
 
+        if($validator->fails()) {
+            return ResponseFormmater::error(
+                null,
+                $validator->errors(),
+                500
+            );
+        }
+
+        $cek = Penilayan::where('user_id', $request->user_id)
+        ->whereDate('created_at', date('Y-m-d'));
+
+        if($cek->first()) {
+            return ResponseFormmater::error(
+                null,
+                'User tersebut sudah anda beri penilayan hari ini',
+                505
+            );
+        }
+
 
         $penilayan = Penilayan::create([
             'user_id' => $request->user_id,
@@ -47,7 +69,7 @@ class PenilayanController extends Controller
             'tanggung_jawab' => $request->tanggung_jawab,
             'kemandirian' => $request->kemandirian,
             'disiplin' => $request->disiplin,
-            'antusias' => $request->required,
+            'antusias' => $request->antusias,
             'komunikasi' => $request->komunikasi,
             'kerjasama_team' => $request->kerjasama_team,
             'empati' => $request->empati,

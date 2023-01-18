@@ -22,7 +22,6 @@ class CreateMagangsTable extends Migration
             $table->string('keahlian')->nullable();
             $table->text('penempatan')->nullable();
             $table->string('tanggal')->nullable();
-            $table->string('sikap')->nullable();
             $table->string('name_perusahaan')->nullable();
             $table->text('alamat')->nullable();
             $table->timestamps();

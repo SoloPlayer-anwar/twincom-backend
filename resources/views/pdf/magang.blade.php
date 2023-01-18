@@ -24,7 +24,7 @@
             <div class="d-block mb-3" style="border-bottom: solid 1px black;"></div>
             <div class="text-center font-weight-bolder text-underline mb-3">
                 <u>
-                    SURAT OTOMATIS PROSUDER
+                    SURAT PERSETUAN MAGANG
                 </u>
             </div>
             <br>
@@ -37,40 +37,35 @@
 
             <div class="ml-12 mb-3">
                 <span>
-                    Dengan Hormat.
-                    <br>
-                    Saya bertanda tangan dibawah ini :
+                    Yang bertanda tangan dibawah ini:
                 </span>
             </div>
 
             @php
-                $detail_ajuan = [
-                    ['name'=>'Nama', 'value'=>$prosuder->name_bm ?? '-'],
-                    ['name'=>'Jabatan', 'value'=>$prosuder->jabatan_bm ?? '-'],
-                    ['name'=>'Cabang', 'value'=>$prosuder->cabang_bm ?? '-'],
+                $detail_admin = [
+                    ['name'=>'Nama', 'value'=>$magang->name ?? '-'],
+                    ['name'=>'Jabatan', 'value'=> 'Admin. HRD' ?? '-'],
+                    ['name'=>'Nama perusahaan', 'value'=>$magang->name_perusahaan ?? '-'],
+                    ['name' => 'Alamat', 'value' => $magang->alamat ?? '-'],
                 ];
 
-
-                $detail_user = [
-                    ['name'=>'Nama', 'value'=>$prosuder->user->name ?? '-'],
-                    ['name'=>'Jabatan', 'value'=>$prosuder->user->role ?? '-'],
-                    ['name'=>'Cabang', 'value'=>$prosuder->user->cabang ?? '-'],
+                $detail_ket = [
+                    ['name' =>  $magang->sekolah, 'value'=> $magang->tanggal ?? '-'],
                 ];
 
-                $detail_keterangan = [
-                    ['name' => 'Keterangan', 'value' => $prosuder->options->keterangan ?? '-'],
-                ];
-
-                $detail_sistem = [
-                    ['name' => 'Dengan alasan dibawah ini :', 'value' => $prosuder->tdm ?? '-'],
+                $detail_siswa = [
+                    ['name' => 'NAMA', 'value' =>$magang->user->name],
+                    ['name' => 'NIS', 'value' =>$magang->nis],
+                    ['name' => 'KOMPETENSI KEAHLIAN', 'value' =>$magang->keahlian],
+                    ['name' => 'PENEMPATAN', 'value' =>$magang->user->cabang],
                 ];
 
 
             @endphp
-            {{-- PERBAIKAN --}}
+            {{-- FORM ADMIN --}}
             <table class="table table-sm table-borderless">
                 <tbody>
-                    @foreach ($detail_ajuan as $row)
+                    @foreach ($detail_admin as $row)
                     <tr>
                         <td width="30%">{{$row['name']}}</td>
                         <td width="70%">: {{$row['value']}}</td>
@@ -79,22 +74,25 @@
                 </tbody>
             </table>
             <div class="my-3"></div>
-            {{-- KELUHAN --}}
+            {{-- FORM KETERANGAN --}}
 
-            <div class="me-10">
-                <span>
-                    @foreach ($detail_keterangan as $row )
-                    <span class="text-sm">{{$row['name']}}:</span>
-                    <br>
-                        <span class="me-10">{{$row['value']}}</span>
+            <div class="col-lg-25">
+                    @foreach ($detail_ket as $row )
+                    <table>
+                        <tr>
+                            <td width ="60%">
+                                Sehubungan dengan surat permohonan yang kami terima pada tanggal {{$row['value']}}<br>Bersama ini kami bersedia untuk menerima siswa dari {{$row['name']}}<br>untuk melakukan PKL (Prakter Kerja Lapangan)<br>dari tanggal {{$row['value']}} di perusahaan kami<br>
+                                Adapun siswa didik yang kami terima adalah sebagai berikut:
+                            </td>
+                        </tr>
+                    </table>
                     @endforeach
-                </span>
             </div>
             <br>
 
             <table class="table table-sm table-borderless">
                 <tbody>
-                    @foreach ($detail_user as $row)
+                    @foreach ($detail_siswa as $row)
                     <tr>
                         <td width="30%">{{$row['name']}}</td>
                         <td width="70%">: {{$row['value']}}</td>
@@ -104,16 +102,10 @@
             </table>
 
             <div class="ml-12 mb-3">
-                @foreach ($detail_sistem as $row )
-                <span>
-                    {{$row['name']}}
-                    <br>
-                    <b>{{$row['value']}}</b>
-                </span>
-                @endforeach
+               <span>
+                Demikian surat persetuan dari kami mohon<br>untuk dapat diketahui dan dipergunakan sebagai mestinya
+               </span>
             </div>
-
-            <br>
             <br>
         </div>
 

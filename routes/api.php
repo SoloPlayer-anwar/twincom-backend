@@ -55,6 +55,7 @@ Route::post('createAbsensi', [AbsensiController::class, 'createAbsensi']);
 Route::post('deleteAbsensi/{id}', [AbsensiController::class, 'deleteAbsensi']);
 Route::post('uploadPhoto/{id}', [AbsensiController::class, 'uploadPhoto']);
 Route::get('getAbsensi', [AbsensiController::class, 'getAbsensi']);
+Route::get('getAbsensiReport', [AbsensiController::class, 'getAbsensiReport']);
 
 // Cabang
 Route::post('createCabang', [CabangController::class, 'createCabang']);
@@ -89,6 +90,7 @@ Route::post('createMagang', [MagangController::class, 'createMagang']);
 Route::get('getMagang', [MagangController::class, 'getMagang']);
 Route::post('updateMagang/{id}', [MagangController::class, 'updateMagang']);
 Route::post('deleteMagang/{id}', [MagangController::class, 'deleteMagang']);
+Route::post('pdfGenerateMagang/{id}', [MagangController::class, 'pdfGenerateMagang']);
 
 
 // PENILAIAN

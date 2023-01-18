@@ -24,7 +24,6 @@ class Magang extends Model
         'keahlian',
         'penempatan',
         'tanggal',
-        'sikap',
         'name_perusahaan',
         'alamat'
     ];

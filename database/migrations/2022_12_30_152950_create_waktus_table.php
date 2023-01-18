@@ -17,7 +17,7 @@ class CreateWaktusTable extends Migration
             $table->id();
             $table->string('status')->nullable();
             $table->string('shift')->nullable();
-            $table->string('tanggal')->nullable();
+            $table->string('time')->nullable();
             $table->timestamps();
         });
     }
